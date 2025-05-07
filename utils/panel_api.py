@@ -38,7 +38,7 @@ async def get_token(panel_data: PanelType) -> PanelType | ValueError:
         "username": f"{panel_data.panel_username}",
         "password": f"{panel_data.panel_password}",
     }
-    for attempt in range(20):
+    for attempt in range(100):
         for scheme in ["https","http"]:
             url = f"{scheme}://{panel_data.panel_domain}/api/admins/token"
             try:
@@ -64,7 +64,7 @@ async def get_token(panel_data: PanelType) -> PanelType | ValueError:
                 continue
         await asyncio.sleep(random.randint(2, 5) * attempt)
     message = (
-        "Failed to get token after 20 attempts. Make sure the panel is running "
+        "Failed to get token after 100 attempts. Make sure the panel is running "
         + "and the username and password are correct."
     )
     await send_logs(message)
